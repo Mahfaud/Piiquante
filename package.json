@@ -13,6 +13,7 @@
   "dependencies": {
     "@angular/cli": "^12.2.3",
     "concurrently": "^5.2.0",
+    "dotenv": "^10.0.0",
     "http-server": "^0.11.1",
     "live-server": "^1.2.1",
     "run-script-os": "^1.0.7"
