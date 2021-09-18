@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const mongoose = require('mongoose')
 const dotenv = require("dotenv").config()
+const authRoute = require("./routes/auth")
 
 // Connexion à la DataBase
 mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser: true})
@@ -21,5 +22,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+// Authentifications Routes
+app.use("/api/auth", authRoute)
 
 app.listen(3000)
