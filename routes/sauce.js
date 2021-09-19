@@ -28,5 +28,32 @@ router.post("/", upload.single("image"), async (req, res) => {
         }
 })
 
+router.get("/", async (req, res) => {
+    try {
+        const sauces = await Sauce.find()
+        res.status(200).send(sauces)
+    } catch(err) {
+        res.status(400).send("Error")
+    }
+})
+
+router.get("/:id", async (req, res) => {
+    try {
+        const oneSauce = await Sauce.findById(req.params.id)
+        res.status(200).send(oneSauce)
+    } catch(err) {
+        res.status(400).send("Error")
+    }
+})
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const removeSauce = await Sauce.deleteOne({_id: req.params.id})
+        res.status(200).send(removeSauce)
+    } catch(err) {
+        res.status(400).send("Error")
+    }
+})
+
 
 module.exports = router;
