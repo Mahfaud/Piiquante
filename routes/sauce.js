@@ -55,5 +55,29 @@ router.delete("/:id", async (req, res) => {
     }
 })
 
+router.put("/:id", upload.single("image") ,async (req, res) => {
+    const updateSauce = {
+        userId: req.body.userId,
+        name: req.body.name,
+        manufacturer: req.body.manufacturer ,
+        description: req.body.description,
+        mainPepper: req.body.mainPepper,
+        heat: req.body.heat,
+        likes: 0,
+        dislikes: 0,
+        usersLiked : [],
+        usersDisliked: []
+    }
+
+    if (req.file) {
+        updateSauce.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+    } else {
+        updateSauce.imageUrl = req.body.imageUrl
+    }
+
+    const updatedSauce = await Sauce.updateOne({_id: req.params.id}, {$set: updateSauce})
+    res.status(200).send(updatedSauce)
+})
+
 
 module.exports = router;
