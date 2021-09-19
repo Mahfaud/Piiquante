@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const dotenv = require("dotenv").config()
 const authRoute = require("./routes/auth")
+const sauceRoute = require("./routes/sauce")
 const path = require('path');
 
 // Connexion à la DataBase
@@ -28,5 +29,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Authentifications Routes
 app.use("/api/auth", authRoute)
+app.use("/api/sauces", sauceRoute)
 
 app.listen(3000)
