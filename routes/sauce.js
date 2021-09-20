@@ -3,16 +3,22 @@ const {upload} = require("../middleware/uploads")
 const authorize = require("../middleware/authorize");
 const sauceControllers = require("../controllers/sauce")
 
-router.post("/", upload.single("image"), sauceControllers.createOneSauce)
+// Route POST pour ajouter une sauce
+router.post("/", upload.single("image"), authorize, sauceControllers.createOneSauce)
 
-router.get("/", sauceControllers.getAllSauces)
+// Route GET qui affiche toutes les sauces
+router.get("/", authorize ,sauceControllers.getAllSauces)
 
-router.get("/:id", sauceControllers.getOneSauce)
+// Route GET qui affiche une sauce en fonction de l'ID
+router.get("/:id", authorize, sauceControllers.getOneSauce)
 
-router.delete("/:id", sauceControllers.deleteOneSauce)
+// Route DELETE qui supprime une sauce en fonction de l'ID
+router.delete("/:id", authorize,  sauceControllers.deleteOneSauce)
 
-router.put("/:id", upload.single("image") , sauceControllers.modifyOneSauce)
+// Route PUT qui modifie une sauce
+router.put("/:id", upload.single("image") , authorize,  sauceControllers.modifyOneSauce)
 
-router.post("/:id/like", sauceControllers.createLikes)
+// Route POST qui ajoute une logique de like/dislike sur une sauce
+router.post("/:id/like", authorize, sauceControllers.createLikes)
 
 module.exports = router;

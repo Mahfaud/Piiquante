@@ -14,10 +14,12 @@ mongoose.connect(process.env.DB_CONNECT, {useNewUrlParser: true})
     console.log("Database OFF")
   })
 
+
+// Middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
-// Middlewares
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -31,4 +33,5 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/auth", authRoute)
 app.use("/api/sauces", sauceRoute)
 
+// Application qui écoute au port 3000
 app.listen(3000)

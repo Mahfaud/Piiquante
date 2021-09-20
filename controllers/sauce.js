@@ -1,5 +1,7 @@
 const Sauce = require ("../model/Sauce")
 
+
+// Fonction qui crée une sauce et l'envoie dans la base de donnée
 exports.createOneSauce = async (req, res) => {
     const body = JSON.parse(req.body.sauce)
     
@@ -24,6 +26,7 @@ exports.createOneSauce = async (req, res) => {
         }
 }
 
+// Récupère toutes les sauces de la base de donnée et les envoie au front-end
 exports.getAllSauces = async (req, res) => {
     try {
         const sauces = await Sauce.find()
@@ -33,6 +36,7 @@ exports.getAllSauces = async (req, res) => {
     }
 }
 
+// Récupère une seul sauce en fonction de l'id qui se trouve dans l'URL et l'envoie au front-end
 exports.getOneSauce = async (req, res) => {
     try {
         const oneSauce = await Sauce.findById(req.params.id)
@@ -42,6 +46,7 @@ exports.getOneSauce = async (req, res) => {
     }
 }
 
+// Supprime une seule sauce en fonction de l'id qui se trouve dans l'URL et l'envoie au front-end
 exports.deleteOneSauce = async (req, res) => {
     try {
         const removeSauce = await Sauce.deleteOne({_id: req.params.id})
@@ -51,6 +56,7 @@ exports.deleteOneSauce = async (req, res) => {
     }
 }
 
+// Modifie une sauce en fonction des choix de l'utilisateur si aucune image est modifiée on gardera l'ancienne.
 exports.modifyOneSauce = async (req, res) => {
     const updateSauce = {
         userId: req.body.userId,
@@ -74,6 +80,9 @@ exports.modifyOneSauce = async (req, res) => {
     const updatedSauce = await Sauce.updateOne({_id: req.params.id}, {$set: updateSauce})
     res.status(200).send(updatedSauce)
 }
+
+// Fonction qui ajoute l'utilisateur dans l'array UsersLikes/UsersDisliked  et ajoute +1 dans les likes ou dislikes
+// Dans le cas ou l'utilisateur enleve son like/dislike on enlevera -1
 
 exports.createLikes = (req,res) => {
     if (req.body.like === 1) {

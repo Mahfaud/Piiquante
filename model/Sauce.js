@@ -10,6 +10,8 @@ const requiredNumber = {
     required: true
 }
 
+
+// Model d'une sauce
 const sauceSchema = new mongoose.Schema({
         userId: requiredString,
         name: requiredString,
