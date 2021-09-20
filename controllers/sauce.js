@@ -18,7 +18,7 @@ exports.createOneSauce = async (req, res) => {
         })
         try {
             const sauceSaved = await sauceSchema.save()
-            res.send(sauceSaved)
+            res.status(200).send(sauceSaved)
         } catch(err) {
             res.status(400).send(err)
         }
@@ -29,7 +29,7 @@ exports.getAllSauces = async (req, res) => {
         const sauces = await Sauce.find()
         res.status(200).send(sauces)
     } catch(err) {
-        res.status(400).send("Error")
+        res.status(404).send("Error")
     }
 }
 
@@ -38,7 +38,7 @@ exports.getOneSauce = async (req, res) => {
         const oneSauce = await Sauce.findById(req.params.id)
         res.status(200).send(oneSauce)
     } catch(err) {
-        res.status(400).send("Error")
+        res.status(404).send("Error")
     }
 }
 
@@ -47,7 +47,7 @@ exports.deleteOneSauce = async (req, res) => {
         const removeSauce = await Sauce.deleteOne({_id: req.params.id})
         res.status(200).send(removeSauce)
     } catch(err) {
-        res.status(400).send("Error")
+        res.status(404).send("Error")
     }
 }
 
@@ -82,7 +82,7 @@ exports.createLikes = (req,res) => {
             .then(()=> {
                 res.status(200).send({message: "Like"})})
         } catch(err) {
-            res.status(400).send({message: "Erreur"})
+            res.status(500).send({message: "Erreur"})
         }
     }
     if (req.body.like === -1) {
@@ -91,7 +91,7 @@ exports.createLikes = (req,res) => {
             .then(()=> {
                 res.status(200).send({message: "Dislike"})})
         } catch(err) {
-            res.status(400).send({message: "Erreur"})
+            res.status(500).send({message: "Erreur"})
         }
     }
     if (req.body.like === 0) {
@@ -110,7 +110,7 @@ exports.createLikes = (req,res) => {
                   }
             })
         } catch(err) {
-            res.status(400).send({message: "Erreur"})
+            res.status(500).send({message: "Erreur"})
         }
     }
 }

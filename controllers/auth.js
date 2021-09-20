@@ -39,7 +39,7 @@ exports.createAccount = async (req,res) => {
             const userSaved = await user.save()
             res.send(userSaved)
         } catch(err) {
-            res.status(400).send(err)
+            res.status(500).send(err)
         }
     }  else {
         res.send("Bad Input")
