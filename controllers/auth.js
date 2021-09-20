@@ -37,7 +37,7 @@ exports.createAccount = async (req,res) => {
         });
         try {
             const userSaved = await user.save()
-            res.send(userSaved)
+            res.send({message: userSaved})
         } catch(err) {
             res.status(500).send(err)
         }

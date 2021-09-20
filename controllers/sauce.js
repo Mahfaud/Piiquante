@@ -32,7 +32,7 @@ exports.getAllSauces = async (req, res) => {
         const sauces = await Sauce.find()
         res.status(200).send(sauces)
     } catch(err) {
-        res.status(404).send("Error")
+        res.status(404).send("Can't find all sauces")
     }
 }
 
@@ -42,7 +42,7 @@ exports.getOneSauce = async (req, res) => {
         const oneSauce = await Sauce.findById(req.params.id)
         res.status(200).send(oneSauce)
     } catch(err) {
-        res.status(404).send("Error")
+        res.status(404).send("Can't find this sauce")
     }
 }
 
@@ -50,9 +50,9 @@ exports.getOneSauce = async (req, res) => {
 exports.deleteOneSauce = async (req, res) => {
     try {
         const removeSauce = await Sauce.deleteOne({_id: req.params.id})
-        res.status(200).send(removeSauce)
+        res.status(200).send({message: removeSauce})
     } catch(err) {
-        res.status(404).send("Error")
+        res.status(404).send("Can't find all this sauce")
     }
 }
 
@@ -78,7 +78,7 @@ exports.modifyOneSauce = async (req, res) => {
     }
 
     const updatedSauce = await Sauce.updateOne({_id: req.params.id}, {$set: updateSauce})
-    res.status(200).send(updatedSauce)
+    res.status(200).send({message: updatedSauce})
 }
 
 // Fonction qui ajoute l'utilisateur dans l'array UsersLikes/UsersDisliked  et ajoute +1 dans les likes ou dislikes
