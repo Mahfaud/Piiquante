@@ -85,41 +85,28 @@ exports.modifyOneSauce = async (req, res) => {
 // Dans le cas ou l'utilisateur enleve son like/dislike on enlevera -1
 
 exports.createLikes = (req,res) => {
-    if (req.body.like === 1) {
-        try {
+    try {
+        if (req.body.like === 1) {
             Sauce.updateOne({ _id: req.params.id }, { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 }})
-            .then(()=> {
-                res.status(200).send({message: "Like"})})
-        } catch(err) {
-            res.status(500).send({message: "Erreur"})
-        }
-    }
-    if (req.body.like === -1) {
-        try {
+            .then(()=> {res.status(200).send({message: "Like"})})}
+
+        if (req.body.like === -1) {
             Sauce.updateOne({ _id: req.params.id }, { $push: { usersDisliked: req.body.userId }, $inc: { dislikes: +1 }})
-            .then(()=> {
-                res.status(200).send({message: "Dislike"})})
-        } catch(err) {
-            res.status(500).send({message: "Erreur"})
-        }
-    }
-    if (req.body.like === 0) {
-        try {
+            .then(()=> {res.status(200).send({message: "Dislike"})})}
+
+        if (req.body.like === 0) {
             Sauce.findOne({ _id: req.params.id })
             .then( (data) => {
                 if (data.usersLiked.includes(req.body.userId)) { 
                     Sauce.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 }})
-                    .then(() => {
-                        res.status(200).send({message: "Cancel Like " })})
-                  }
+                    .then(() => {res.status(200).send({message: "Cancel Like " })})
+                }
                 if (data.usersDisliked.includes(req.body.userId)) { 
                     Sauce.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 }})
-                    .then(() => {
-                        res.status(200).send({message: "Cancel Dislike" })})
-                  }
-            })
-        } catch(err) {
+                    .then(() => {res.status(200).send({message: "Cancel Dislike" })})
+                }})
+        }
+    } catch(err) {
             res.status(500).send({message: "Erreur"})
         }
-    }
 }
