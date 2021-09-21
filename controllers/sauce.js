@@ -49,10 +49,10 @@ exports.getOneSauce = async (req, res) => {
 // Supprime une seule sauce en fonction de l'id qui se trouve dans l'URL et l'envoie au front-end
 exports.deleteOneSauce = async (req, res) => {
     try {
-        const removeSauce = await Sauce.deleteOne({_id: req.params.id})
-        res.status(200).send({message: removeSauce})
+        await Sauce.deleteOne({_id: req.params.id})
+        res.status(200).send({message: "Sauce supprimée !"})
     } catch(err) {
-        res.status(404).send("Can't find all this sauce")
+        res.status(404).send("Can't find all sauces")
     }
 }
 
@@ -77,8 +77,8 @@ exports.modifyOneSauce = async (req, res) => {
         updateSauce.imageUrl = req.body.imageUrl
     }
 
-    const updatedSauce = await Sauce.updateOne({_id: req.params.id}, {$set: updateSauce})
-    res.status(200).send({message: updatedSauce})
+    await Sauce.updateOne({_id: req.params.id}, {$set: updateSauce})
+    res.status(200).send({message: "Sauce modifiée !"})
 }
 
 // Fonction qui ajoute l'utilisateur dans l'array UsersLikes/UsersDisliked  et ajoute +1 dans les likes ou dislikes

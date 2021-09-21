@@ -36,8 +36,8 @@ exports.createAccount = async (req,res) => {
             password: hashPassword
         });
         try {
-            const userSaved = await user.save()
-            res.send({message: userSaved})
+            await user.save()
+            res.send({message: "Compte créé !"})
         } catch(err) {
             res.status(500).send(err)
         }
@@ -63,7 +63,7 @@ exports.logIn = async (req, res) => {
         // On regarde si le mot de passe correspond
         const validPass = await bcrypt.compare(req.body.password, user.password)
         if (!validPass) {
-            return res.status(400).send("Wrong password")
+            return res.status(400).send("Email or password is wrong")
         }
 
         // Création d'un JSON Web Token
